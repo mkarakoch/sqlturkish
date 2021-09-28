@@ -48,6 +48,75 @@ WHERE EXISTS (SELECT urun_id FROM nisan_satislar ns
 SELECT urun_isim, musteri_isim FROM nisan_satislar ns
 WHERE EXISTS (SELECT urun_isim FROM mart_satislar ms
 				WHERE ns.urun_isim = ms.urun_isim);
+			
+/*
+	ORNEK 3 : Her iki ayda da ortak olarak satilmayan urunlerin urun_isim'lerini
+	ve bu urunleri nisan ayinda satin alan musteri_isim'lerini listeleyiniz. 
+ */
+
+SELECT urun_isim, musteri_isim FROM nisan_satislar ns
+WHERE NOT EXISTS (SELECT urun_isim FROM mart_satislar ms 
+				WHERE ms.urun_isim = ns.urun_isim);
+
+
+--================IS NULL, IS NOT NULL, COALESCE====================
+/*
+ 	IS NULL, ve IS NOT NULL BOOLEAN operatorleridir. Bir ifadenin NULL olup
+ 	olmadigini kontol ederler.
+ */
+			
+
+CREATE TABLE insanlar 
+(
+	ssn CHAR(9),
+	isim VARCHAR2(50),
+	adres VARCHAR2(50)
+);
+
+INSERT INTO insanlar VALUES ('123456789', 'Ali Can', 'Istanbul');
+INSERT INTO insanlar VALUES ('234567890', 'Veli Cem', 'Ankara');
+INSERT INTO insanlar VALUES ('345678901', 'Mine Bulut', 'Izmir');
+INSERT INTO insanlar (ssn, adres) VALUES ('456789012', 'Bursa');
+INSERT INTO insanlar (ssn, adres) VALUES ('567890123', 'Denizli');
+INSERT INTO insanlar (adres) VALUES ('Sakarya');
+INSERT INTO insanlar (ssn) VALUES ('999111222');
+
+SELECT * FROM insanlar;
+
+--ORNEK : isim'i NULL olanlari sorgulayiniz 
+
+SELECT * FROM insanlar
+WHERE isim IS NULL ;
+
+-- ORNEK : ismi NULL olmayanlari sorgulayiniz 
+SELECT * FROM INSANLAR 
+WHERE isim IS NOT NULL;
+
+--ORNEK : isim NULL olan kisilerin isimlerine NO NAME yazisi atayiniz. 
+UPDATE INSANLAR 
+SET isim = 'NO NAME'
+WHERE isim IS NULL;
+
+SELECT * FROM INSANLAR 
 
 
 
+			
+			
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+	
+			
+			
+			
+			
+			
