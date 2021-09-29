@@ -63,6 +63,20 @@ WHERE NOT EXISTS (SELECT urun_isim FROM mart_satislar ms
 /*
  	IS NULL, ve IS NOT NULL BOOLEAN operatorleridir. Bir ifadenin NULL olup
  	olmadigini kontol ederler.
+ 	
+ 	*COALESCE (Birlesmek) ise bir fonksiyondur ve icerisindeki parametlerden NULL
+ 	 select COALESCE (sutun1, sutun2,....) from tabloadi ;
+ 	 
+ 	 Birden fazla null kosuluna gore deger atamak istiyorsak COALESCE deyimini kullanabiliriz.
+ 	 COALESCE aslinda case mantiginda calisir ve birden fazla kolon arasinda kontrol saglaybilir 
+ 	 Bir kosul gerceklesmez ise digerine bakar, oda gerceklesmez ise bir sonraki
+ 	 Deyim bitine kadar 
+ 	 --CASE
+ 	 WHEN (expression1 IS NOT NULL) THEN expression1 
+ 	 WHEN (expression2 IS NOT NULL) THEN expression2
+ 	 ....
+ 	 ELSE expressionN
+ 	 END --gibi  
  */
 			
 
@@ -83,6 +97,8 @@ INSERT INTO insanlar (ssn) VALUES ('999111222');
 
 SELECT * FROM insanlar;
 
+DROP TABLE insanlar;
+
 --ORNEK : isim'i NULL olanlari sorgulayiniz 
 
 SELECT * FROM insanlar
@@ -96,6 +112,14 @@ WHERE isim IS NOT NULL;
 UPDATE INSANLAR 
 SET isim = 'NO NAME'
 WHERE isim IS NULL;
+
+UPDATE insanlar 
+SET isim = NULL 
+WHERE isim 'NO NAME';
+
+
+SELECT COALESCE (ssn, isim, adres) FROM insanlar;
+
 
 SELECT * FROM INSANLAR 
 
